@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.lovecalculator.databinding.ActivityMainBinding
 import com.example.lovecalculator.fragment.MainFragment
 import com.example.lovecalculator.model.LoveModel
@@ -22,5 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(androidx.navigation.fragment.R.id.nav_host_fragment_container) as NavHostFragment
     }
 }

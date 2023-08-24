@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.lovecalculator.R
 import com.example.lovecalculator.databinding.FragmentMainBinding
 import com.example.lovecalculator.model.LoveModel
@@ -40,35 +40,24 @@ class MainFragment : Fragment() {
 
             RetrofitService().api.calculateMatching(firstEdText, secondEdText)
                 .enqueue(object : Callback<LoveModel> {
-                    override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
-                        handleSuccessResponse(response.body(), firstEdText, secondEdText)
+                    override fun onResponse(
+                        call: Call<LoveModel>,
+                        response: Response<LoveModel>
+                    ) {
+                        Log.e("ololo", "${response.body()}")
+                        val loveModel = response.body()
+                        val bundle = bundleOf(
+                            "key_result" to loveModel?.toString(),
+                            "key_you" to firstEdText,
+                            "key_me" to secondEdText
+                        )
+                        findNavController().navigate(R.id.firstFragment, bundle)
                     }
 
                     override fun onFailure(call: Call<LoveModel>, t: Throwable) {
-                        handleFailureResponse(t.message)
+                        Log.e("ololo", "onFailure:${t.message}")
                     }
                 })
         }
-    }
-
-    private fun handleSuccessResponse(loveModel: LoveModel?, youText: String, meText: String) {
-        val bundle = bundleOf(
-            "key_result" to loveModel?.toString(),
-            "key_you" to youText,
-            "key_me" to meText
-        )
-
-        val fragmentB = FirstFragment()
-        fragmentB.arguments = bundle
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.mainFragment, fragmentB)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    private fun handleFailureResponse(errorMessage: String?) {
-        Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show()
-        Log.e("ololo", "onFailure: $errorMessage")
     }
 }

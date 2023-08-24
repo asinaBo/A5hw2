@@ -24,25 +24,16 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setData()
-    }
+        loveModel = this.arguments?.getSerializable("love") as LoveModel
+        binding.tvMe.text = loveModel.firstname
+        binding.tvYoy.text = loveModel.secondName
+        binding.tvProcent.text = loveModel.percentage + "%"
+        binding.text.text = loveModel.result
 
-    private fun setData() {
-        val bunle = arguments
-        if (bunle != null) {
-            binding.tvProcent.text = bunle.getString("key_result")
-            binding.tvMe.text = bunle.getString("key_me")
-            binding.tvYoy.text = bunle.getString("key_you")
-
-            loveModel = this.arguments?.getSerializable("love") as LoveModel
-            binding.tvMe.text = loveModel.firstname
-            binding.tvYoy.text = loveModel.secondName
-            binding.tvProcent.text = loveModel.percentage + "%"
-            binding.text.text = loveModel.result
-        }
         binding.btnTry.setOnClickListener {
             findNavController().navigate(R.id.mainFragment)
         }
     }
+
 
 }

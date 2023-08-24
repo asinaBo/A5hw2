@@ -30,34 +30,28 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initClickers()
+        initClicker()
     }
 
-    private fun initClickers() {
-        binding.btnCalculator.setOnClickListener {
-            val firstEdText = binding.firstEd.text.toString()
-            val secondEdText = binding.secondEd.text.toString()
+    private fun initClicker() {
+        with(binding){
+            btnCalculator.setOnClickListener{
+                RetrofitService().api.calculateMatching(
+                    firstEd.text.toString(),
+                    secondEd.text.toString()
+                ).enqueue(object : Callback<LoveModel> {
 
-            RetrofitService().api.calculateMatching(firstEdText, secondEdText)
-                .enqueue(object : Callback<LoveModel> {
-                    override fun onResponse(
-                        call: Call<LoveModel>,
-                        response: Response<LoveModel>
-                    ) {
-                        Log.e("ololo", "${response.body()}")
-                        val loveModel = response.body()
-                        val bundle = bundleOf(
-                            "key_result" to loveModel?.toString(),
-                            "key_you" to firstEdText,
-                            "key_me" to secondEdText
-                        )
-                        findNavController().navigate(R.id.firstFragment, bundle)
+                    override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
+                        Log.e("ololo", "OnResponse: ${response.body()}")
+                        findNavController().navigate(R.id.firstFragment, bundleOf("love" to response.body()))
                     }
 
                     override fun onFailure(call: Call<LoveModel>, t: Throwable) {
-                        Log.e("ololo", "onFailure:${t.message}")
+                        Log.e("ololo", "OnFailure: ${t.message}")
                     }
+
                 })
+            }
         }
     }
 }

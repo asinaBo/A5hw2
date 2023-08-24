@@ -54,7 +54,7 @@
         android:id="@+id/tvProcent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="188dp"
         android:text="100%"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -76,12 +76,13 @@
 
     <TextView
         android:id="@+id/text"
-        android:textColor="@color/black"
-        android:text="Text"
-        app:layout_constraintTop_toBottomOf="@id/tvMe"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="108dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:layout_marginBottom="24dp"
+        android:text="Text"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/btnTry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

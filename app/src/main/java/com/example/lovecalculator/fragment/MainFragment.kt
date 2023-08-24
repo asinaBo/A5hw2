@@ -34,8 +34,8 @@ class MainFragment : Fragment() {
     }
 
     private fun initClicker() {
-        with(binding){
-            btnCalculator.setOnClickListener{
+        with(binding) {
+            btnCalculator.setOnClickListener {
                 RetrofitService().api.calculateMatching(
                     firstEd.text.toString(),
                     secondEd.text.toString()
@@ -43,7 +43,10 @@ class MainFragment : Fragment() {
 
                     override fun onResponse(call: Call<LoveModel>, response: Response<LoveModel>) {
                         Log.e("ololo", "OnResponse: ${response.body()}")
-                        findNavController().navigate(R.id.firstFragment, bundleOf("love" to response.body()))
+                        findNavController().navigate(
+                            R.id.firstFragment,
+                            bundleOf("love" to response.body())
+                        )
                     }
 
                     override fun onFailure(call: Call<LoveModel>, t: Throwable) {

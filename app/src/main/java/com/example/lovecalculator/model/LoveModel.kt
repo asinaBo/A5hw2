@@ -11,4 +11,3 @@ data class LoveModel(
     var percentage: String,
     var result: String,
 ) : Serializable
-
